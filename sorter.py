@@ -1,24 +1,53 @@
 import os
+from PyQt6 import QtCore, QtWidgets, QtGui
+
+class FileRenamerApp(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        
+        layout = QtWidgets.QVBoxLayout()
+
+        self.pathEdit = QtWidgets.QLineEdit(self)
+        self.formatEdit = QtWidgets.QLineEdit(self)
+        self.sortButton = QtWidgets.QPushButton('Sort it', self)
+        self.resultLabel = QtWidgets.QLabel('', self)
+        
+        layout.addWidget(self.pathEdit)
+        layout.addWidget(self.formatEdit)
+        layout.addWidget(self.sortButton)
+        layout.addWidget(self.resultLabel)
+
+        self.setLayout(layout)
+
+        self.sortButton.clicked.connect(self.sortFiles)
+
+    def sortFiles(self):
+        folder_path = self.pathEdit.text()
+        file_format = self.formatEdit.text()
+        
+        try:
+            file_list = [file for file in os.listdir(folder_path) if file.endswith(file_format)]
+            num_files = len(file_list)
+            self.resultLabel.setText(f"Number of files: {num_files}")
+
+            for i, file_name in enumerate(file_list, start=1):
+                new_file_name = f"{i}{file_format}"
+                os.rename(os.path.join(folder_path, file_name), os.path.join(folder_path, new_file_name))
+                print(f"File {file_name} to {new_file_name} renamed.")
+            
+            self.resultLabel.setText(f"All files have been renamed successfully:).")
+        
+        except Exception as e:
+            self.resultLabel.setText(f"An error occurred:(:  {e}")
 
 def main():
-    # inster your path
-    folder_path = input("inter your path: ")
-
-    # inter file foramt
-    file_format = input("inter your file formats for exp : .txt or .png... ")
-
-    # list all of the file in folder
-    file_list = [file for file in os.listdir(folder_path) if file.endswith(file_format)]
-
-    # count of files
-    num_files = len(file_list)
-    print(f"number of files: {num_files}")
-
-    # rename the all files
-    for i, file_name in enumerate(file_list, start=1):
-        new_file_name = f"{i}{file_format}"
-        os.rename(os.path.join(folder_path, file_name), os.path.join(folder_path, new_file_name))
-        print(f"file {file_name} to {new_file_name} renamed.")
+    app = QtWidgets.QApplication([])
+    window = FileRenamerApp()
+    window.show()
+    app.exec()
 
 if __name__ == "__main__":
     main()
