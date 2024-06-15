@@ -41,7 +41,7 @@ class FileRenamerApp(QtWidgets.QWidget):
             self.resultLabel.setText(f"All files have been renamed successfully:).")
         
         except Exception as e:
-            self.resultLabel.setText(f"An error occurred:(:  {e}")
+            self.resultLabel.setText(f"An error occurred:(: \n https://github.com/Ammaqouliqp/goodapps/blob/main/sorter.py ")
 
 def main():
     app = QtWidgets.QApplication([])
