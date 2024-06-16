@@ -10,8 +10,9 @@ class FileRenamerApp(QtWidgets.QWidget):
         
         layout = QtWidgets.QVBoxLayout()
 
-        self.pathEdit = QtWidgets.QLineEdit(self)
-        self.formatEdit = QtWidgets.QLineEdit(self)
+        self.pathEdit = QtWidgets.QLineEdit("enter your address",self)
+        self.formatEdit = QtWidgets.QLineEdit("enter your foramt",self)
+        #self.windowIconText = QtWidgets.QGraphicsTextItem("nothing",self)
         self.sortButton = QtWidgets.QPushButton('Sort it', self)
         self.resultLabel = QtWidgets.QLabel('', self)
         
